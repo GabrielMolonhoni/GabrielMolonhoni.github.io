@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #f5f5f7;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 1000;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #f5f5f7 0%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            color: #86868b;
+            font-weight: 400;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 40px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: rgba(0, 113, 227, 0.5);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .skill-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .skill-desc {
+            color: #86868b;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #0071e3 0%, #00a2ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .project-desc {
+            color: #86868b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(0, 113, 227, 0.2);
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #0071e3;
+        }
+
+        .contact {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 120px 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 980px;
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 32px;
+            color: #86868b;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(0, 113, 227, 0.5) 10%, 
+                rgba(0, 113, 227, 0.5) 90%, 
+                transparent 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: calc(50% + 40px);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 0;
+            padding-right: calc(50% + 40px);
+            transform: translateX(-30px);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #0071e3;
+            border: 4px solid #000;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(0, 113, 227, 0.5);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 350px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 113, 227, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .timeline-date {
+            color: #0071e3;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #f5f5f7;
+        }
+
+        .timeline-company {
+            font-size: 16px;
+            color: #86868b;
+            margin-bottom: 15px;
+        }
+
+        .timeline-desc {
+            font-size: 15px;
+            color: #86868b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 48px; }
+            .subtitle { font-size: 20px; }
+            .section-title { font-size: 36px; }
+            .nav-links { display: none; }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                transform: translateX(0);
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                text-align: left;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">🍎</div>
+            <ul class="nav-links">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Olá, eu sou [Seu Nome]</h1>
+            <p class="subtitle">Desenvolvedor. Criador. Inovador.</p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section class="section" id="sobre">
+        <h2 class="section-title">Sobre Mim</h2>
+        <p style="text-align: center; font-size: 20px; color: #86868b; max-width: 800px; margin: 0 auto; line-height: 1.8; margin-bottom: 80px;">
+            Sou um desenvolvedor apaixonado por criar experiências digitais excepcionais. 
+            Com foco em design elegante e código limpo, transformo ideias em realidade.
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2024 - Presente</div>
+                    <h3 class="timeline-title">Desenvolvedor Full Stack</h3>
+                    <p class="timeline-company">Empresa Atual</p>
+                    <p class="timeline-desc">Desenvolvimento de aplicações web escaláveis usando React, Node.js e AWS. Liderança técnica em projetos estratégicos.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2022 - 2024</div>
+                    <h3 class="timeline-title">Desenvolvedor Front-end</h3>
+                    <p class="timeline-company">Tech Company</p>
+                    <p class="timeline-desc">Criação de interfaces modernas e responsivas. Implementação de design systems e otimização de performance.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2020 - 2022</div>
+                    <h3 class="timeline-title">Desenvolvedor Junior</h3>
+                    <p class="timeline-company">Startup Inovadora</p>
+                    <p class="timeline-desc">Desenvolvimento de features e manutenção de código. Aprendizado em metodologias ágeis e trabalho em equipe.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2018 - 2020</div>
+                    <h3 class="timeline-title">Bacharelado em Ciência da Computação</h3>
+                    <p class="timeline-company">Universidade XYZ</p>
+                    <p class="timeline-desc">Formação em fundamentos de programação, algoritmos, estruturas de dados e engenharia de software.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="habilidades">
+        <h2 class="section-title">Habilidades</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">💻</div>
+                <h3 class="skill-title">Desenvolvimento Front-end</h3>
+                <p class="skill-desc">React, Vue.js, HTML5, CSS3, JavaScript moderno e frameworks responsivos.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">⚙️</div>
+                <h3 class="skill-title">Desenvolvimento Back-end</h3>
+                <p class="skill-desc">Node.js, Python, APIs RESTful, bancos de dados e arquitetura de sistemas.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">🎨</div>
+                <h3 class="skill-title">UI/UX Design</h3>
+                <p class="skill-desc">Design de interfaces intuitivas com foco na experiência do usuário.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">📱</div>
+                <h3 class="skill-title">Mobile Development</h3>
+                <p class="skill-desc">Aplicativos nativos e híbridos para iOS e Android.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projetos">
+        <h2 class="section-title">Projetos em Destaque</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">🚀</div>
+                <div class="project-content">
+                    <h3 class="project-title">Projeto Alpha</h3>
+                    <p class="project-desc">Uma aplicação web moderna focada em performance e experiência do usuário.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">🎯</div>
+                <div class="project-content">
+                    <h3 class="project-title">Projeto Beta</h3>
+                    <p class="project-desc">Dashboard analytics com visualizações interativas e tempo real.</p>
+                    <div class="project-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">D3.js</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">✨</div>
+                <div class="project-content">
+                    <h3 class="project-title">Projeto Gamma</h3>
+                    <p class="project-desc">Aplicativo mobile com design elegante e funcionalidades inovadoras.</p>
+                    <div class="project-tags">
+                        <span class="tag">React Native</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">TypeScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contato">
+        <h2 class="section-title">Vamos Conversar</h2>
+        <p style="font-size: 20px; color: #86868b; margin-bottom: 20px;">
+            Interessado em trabalhar junto? Entre em contato!
+        </p>
+        <div class="contact-links">
+            <a href="https://github.com/seuusuario" class="contact-btn">
+                <span>GitHub</span>
+            </a>
+            <a href="https://linkedin.com/in/seuusuario" class="contact-btn">
+                <span>LinkedIn</span>
+            </a>
+            <a href="mailto:seu@email.com" class="contact-btn">
+                <span>Email</span>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        document.querySelectorAll('.timeline-item').forEach((el, index) => {
+            setTimeout(() => observer.observe(el), index * 100);
+        });
+    </script>
+</body>
+</html>
